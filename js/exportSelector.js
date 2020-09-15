@@ -26,6 +26,8 @@ var ExportSelector = Class.create( {
         typeListElement.insert(_addTypeOption(true,  "PED", "ped"));        
         typeListElement.insert(_addTypeOption(false, "BOADICEA", "BOADICEA"));
         typeListElement.insert(_addTypeOption(false, "Simple JSON", "simpleJSON"));
+        typeListElement.insert(_addTypeOption(false, "PNG", "png"));
+
         //TODO: typeListElement.insert(_addTypeOption(false, "Phenotips Pedigree JSON", "phenotipsJSON"));
         
         var fileDownload = new Element('a', {"id": 'downloadLink', "style": 'display:none'});
@@ -93,9 +95,12 @@ var ExportSelector = Class.create( {
         if (exportType == "ped" || exportType == "BOADICEA") {
             pedOptionsTable.show();
             jsonOptionsTable.hide();
-        } else {
+        } else if (exportType === "simpleJSON") {
             pedOptionsTable.hide();
-            jsonOptionsTable.show();            
+            jsonOptionsTable.show();
+        } else {
+            // when png
+            pedOptionsTable.hide();
         }
     },
 
@@ -127,6 +132,44 @@ var ExportSelector = Class.create( {
             } else if (exportType == "BOADICEA") {
                 var exportString = PedigreeExport.exportAsBOADICEA(editor.getGraph().DG, idGenerationSetting);
                 var fileName = patientDocument + ".dat";
+            } else if (exportType === 'png') {
+                Date.prototype.format = function (fmt) {
+                    var o = {
+                        "M+": this.getMonth() + 1,                 //月份
+                        "d+": this.getDate(),                    //日
+                        "h+": this.getHours(),                   //小时
+                        "m+": this.getMinutes(),                 //分
+                        "s+": this.getSeconds(),                 //秒
+                        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                        "S": this.getMilliseconds()             //毫秒
+                    };
+        
+                    if (/(y+)/.test(fmt)) {
+                        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                    }
+        
+                    for (var k in o) {
+                        if (new RegExp("(" + k + ")").test(fmt)) {
+                            fmt = fmt.replace(
+                                RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                        }
+                    }
+        
+                    return fmt;
+                }
+                
+                html2canvas(document.querySelector("#canvas")).then(canvas => {
+                    var a = document.createElement('a');
+                    a.href = canvas.toDataURL('image/png');  //将画布内的信息导出为png图片数据
+                    var d1 = new Date();
+                    // 下载文件格式
+                    var filename = "Panogram" + d1.format('yyyyMMdd_hhmmss') + ".png";  //设定下载名称
+                    console.log('downloading a new File:' + filename)
+                    a.download = filename
+                    a.click(); //点击触发下载
+                });
+        
+                return;
             }
             var mimeType = "text/plain";
         }

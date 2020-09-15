@@ -48,6 +48,26 @@ var Controller = Class.create({
         var check      = event.memo.hasOwnProperty("check");
         var clear      = false;
         var needRedraw = false;
+        var maps = editor.getView().getNodeMap()
+        /**
+         * 找到所有结点中最小的 x
+         */
+        var minX = 0
+        for (var nodeID in maps) {
+            if (maps.hasOwnProperty(nodeID)) {
+                // 遍历所有 person 结点
+                if(editor.getGraph().isPerson(nodeID)) {
+                    // console.log('【x】'+maps[nodeID].getGraphics()._absoluteX)
+                    var tempX = maps[nodeID].getGraphics()._absoluteX
+                    if(minX > tempX) {
+                        minX = tempX
+                    }
+                }
+            }
+        }
+        
+        // 设置阿拉伯数字的 x 位置
+        PedigreeEditor.attributes.pedNumberLabelRomanX = minX - PedigreeEditor.attributes.pedNumberLabelRomanXPadding
 
         do {
             var secondPass = false;
@@ -85,6 +105,9 @@ var Controller = Class.create({
                 }
             }
         } while (secondPass);
+
+        // 获得所有node
+
 
         var renumberButton = $('action-number');
         if (clear) {

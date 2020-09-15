@@ -23,7 +23,12 @@ var AbstractPersonVisuals = Class.create(AbstractNodeVisuals, {
         this._genderShape    = null;                        
         this._genderGraphics = null;  // == set(_genderShape, shadow)
         this._numberLabel    = null;
-                     
+        // 罗马数字
+        this._numberLabelRoman = null;
+
+        // 用来保存最左边的label
+        this._numberLeftLabels = null
+        
         this.setGenderGraphics();
         
         this.setHighlightBox();
@@ -39,16 +44,31 @@ var AbstractPersonVisuals = Class.create(AbstractNodeVisuals, {
         var x = this.getX();
         var y = this.getY();
         this._idLabel && this._idLabel.remove();
+        this._numberLabelRoman && this._numberLabelRoman.remove();
+
         this._idLabel = editor.getPaper().text(x, y, this.getNode().getID()).attr(PedigreeEditor.attributes.dragMeLabel).toFront();
         this._idLabel.node.setAttribute("class", "no-mouse-interaction");
     },
 
     updateNumberLabel: function() {
         this._numberLabel && this._numberLabel.remove();
+        this._numberLabelRoman && this._numberLabelRoman.remove();
+
         if (this.getNode().getPedNumber() != "") {
             var x = this.getX();
             var y = this.getY();
-            this._numberLabel = editor.getPaper().text(x, y, this.getNode().getPedNumber()).attr(PedigreeEditor.attributes.pedNumberLabel).toFront();
+            // 修改文字
+            var nums = (this.getNode().getPedNumber()).split('-')
+       
+            // 修改 number 的位置
+            y += PedigreeEditor.attributes.pedNumberLabelPlace;
+            this._numberLabel = editor.getPaper().text(x, y, nums[1]).attr(PedigreeEditor.attributes.pedNumberLabel).toFront();
+            
+            // 最左边的位置
+            if(nums[1] === '1') {
+                this._numberLabelRoman = editor.getPaper().text(PedigreeEditor.attributes.pedNumberLabelRomanX, 
+                    y-65, nums[0]).attr(PedigreeEditor.attributes.pedNumberLabelRoman).toFront();
+            }
             this._numberLabel.node.setAttribute("class", "no-mouse-interaction");
         }
     },
@@ -243,7 +263,8 @@ var AbstractPersonVisuals = Class.create(AbstractNodeVisuals, {
      * @return {Raphael.st}
      */
     getAllGraphics: function($super) {
-        return editor.getPaper().set(this.getHighlightBox(), this._idLabel, this._numberLabel).concat($super());
+        return editor.getPaper().set(this.getHighlightBox(), this._idLabel, 
+        this._numberLabel, this._numberLabelRoman).concat($super());
     },
 
     /**

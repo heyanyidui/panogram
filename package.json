@@ -1,11 +1,63 @@
 {
-    "name": "Panogram",
-    "main": "index.html",
-    "version": "0.1.0",
-    "window": {
-        "toolbar": false,
-        "width": 1200,
-        "height": 800,
-        "icon": "resources/icons/app.png"
+  "name": "Panogram",
+  "version": "1.0.1",
+  "description": "Panogram is offline standalon multiplatform Pedigree drawing tool based on Phenotips platform.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://code.aliyun.com/smileyan/another-panogram",
+  "keywords": [
+    "Electron",
+    "Panogram",
+    "Health"
+  ],
+  "author": "Andrej Griniuk; Smileyan",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^9.2.0"
+  },
+  "build": {
+    "appId": "cn.smileyan.Panogram",
+    "productName": "Panogram",
+    "artifactName": "${productName}_setup_${version}.${ext}",
+    "copyright": "Copyright © 2020 smileyan.cn",
+    "asar": true,
+    "directories": {
+      "output": "build-apps",
+      "buildResources": "./"
+    },
+    "electronVersion": "9.2.0",
+    "files": [
+      "!static/js/*.map",
+      "!static/css/*.map"
+    ],
+    "win": {
+      "icon": "resources/icons/app.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false,
+      "menuCategory": true,
+      "allowElevation": false
+    },
+    "linux": {
+      "icon": "icons/",
+      "category": "Utility",
+      "target": [
+        "AppImage"
+      ]
+    },
+    "mac": {
+      "icon": "resources/icons/app.icns",
+      "type": "development",
+      "category": "public.app-category.developer-tools",
+      "target": [
+        "dmg"
+      ]
     }
+  }
 }

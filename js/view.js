@@ -54,8 +54,8 @@ var View = Class.create({
 
         // 4) proband arrow
         //this.__arrow_svgPath = "M7.589,20.935l-6.87,6.869l2.476,2.476l6.869-6.869l1.858,1.857l2.258-8.428l-8.428,2.258L7.589,20.935z";
-        this.__arrow_svgPath = "M8.348,23.029C8.348,23.029,0.791,30.584,0.791,30.584C0.791,30.584,3.515,33.308,3.515,33.308C3.515,33.308,11.07,25.752,11.0704,25.752C11.07,25.752,13.114,27.795,13.114,27.795C13.114,27.795,15.598,18.524,15.598,18.524C15.598,18.524,6.327,21.008,6.327,21.008C6.327,21.008,8.348,23.029,8.348,23.0285C8.348,23.029,8.348,23.029,8.348,23.029";
-        this.__probandArrowPath = Raphael.transformPath(this.__arrow_svgPath, ["s", 1.1, 1.1, 0, 0]);
+        // this.__arrow_svgPath = "M8.348,23.029C8.348,23.029,0.791,30.584,0.791,30.584C0.791,30.584,3.515,33.308,3.515,33.308C3.515,33.308,11.07,25.752,11.0704,25.752C11.07,25.752,13.114,27.795,13.114,27.795C13.114,27.795,15.598,18.524,15.598,18.524C15.598,18.524,6.327,21.008,6.327,21.008C6.327,21.008,8.348,23.029,8.348,23.0285C8.348,23.029,8.348,23.029,8.348,23.029";
+        // this.__probandArrowPath = Raphael.transformPath(this.__arrow_svgPath, ["s", 1.1, 1.1, 0, 0]);
     },
 
     /**
@@ -647,10 +647,17 @@ var View = Class.create({
 
         for (var i = 0; i < newPersons.length; i++) {
             var newPerson = this.addNode(newPersons[i]);
+            // 对新增node进行mark操作（一圈光晕）
             if (markNew) {
                 newPerson.getGraphics().markPermanently();
                 this._currentMarkedNew.push(newPersons[i]);
             }
+            // 如果是 U
+            // if (newPerson.getProperties().gender === 'U') {
+            //     var shape = this.getNode(newPerson.getID()).getGraphics()._genderShape
+            //     console.log(shape.attrs)
+            //     console.log(this.getNode(newPerson.getID()).getGraphics()._absoluteX)
+            // }
         }
 
         timer.printSinceLast("=== New persons runtime: ");
@@ -668,6 +675,7 @@ var View = Class.create({
         if (changeSet.hasOwnProperty("highlight")) {
             for (var i = 0; i < changeSet.highlight.length; i++) {
                 var nextHighlight = changeSet.highlight[i];
+                // 对新增node时对应的node进行mark操作（一圈光晕）
                 this.getNode(nextHighlight).getGraphics().markPermanently();
                 this._currentMarkedNew.push(nextHighlight);
             }

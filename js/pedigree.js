@@ -725,12 +725,14 @@ PedigreeEditor.attributes = {
     presymptomaticShape: {fill : '#777777', "stroke": "#777777"},
     presymptomaticShapeWidth: 8,
     evaluationShape: {'font-size': 40, 'font-family': 'Arial'},
-    nodeShape:     {fill: "#DDDDDD", stroke: "#595959"},  // this
+    // 与下面的nodeShapeDiag一起，Node 的颜色
+    nodeShape:     {fill: "#FFFFFF", stroke: "#595959","stroke-width": "5.09259"},  // this
     nodeShapeMenuOn:  {fill: "#000", stroke: "none", "fill-opacity": 0.1},
     nodeShapeMenuOff: {fill: "#000", stroke: "none", "fill-opacity": 0},
     nodeShapeMenuOnPartner:  {fill: "#000", stroke: "none", "fill-opacity": 0.1},
     nodeShapeMenuOffPartner: {fill: "#000", stroke: "none",   "fill-opacity": 0},
-    nodeShapeDiag: {fill: "#DDDDDD", stroke: "#595959"}, // this
+    // 添加 node 时对应的 Unknow 的 结点
+    nodeShapeDiag: {fill: "#FFFFFF", stroke: "#595959", 'stroke-width': "5.09259"}, // this
     boxOnHover : {fill: "gray", stroke: "none", opacity: 1, "fill-opacity":.35},
     menuBtnIcon : {fill: "#1F1F1F", stroke: "none"},
     deleteBtnIcon : {fill: "#990000", stroke: "none"},
@@ -738,22 +740,36 @@ PedigreeEditor.attributes = {
     btnMaskHoverOff : {opacity:0},
     btnMaskClick: {opacity:1},
     orbHue : .53,
-        phShape: {fill: "white","fill-opacity": 0, "stroke": 'black', "stroke-dasharray": "- "},
+    phShape: {fill: "white","fill-opacity": 0, "stroke": 'black', "stroke-dasharray": "- "},
     dragMeLabel: {'font-size': 14, 'font-family': 'Tahoma'},
-    pedNumberLabel: {'font-size': 19, 'font-family': 'Serif'},
+    // 阿拉伯数字
+    pedNumberLabel: {'font-size': 56, 'font-family': 'Times New Roman', 'font-weight': '600'},
+    // 阿拉伯数字的相对位置
+    pedNumberLabelPlace: 75,
+
+    // 罗马数字
+    pedNumberLabelRoman: {'font-size': 60, 'font-family': 'Times New Roman', 
+                            'font-weight': '600','letter-spacing':'-10px'},
+    // 默认左边位置
+    pedNumberLabelRomanX: -500,
+    // 与所有node中最小的x保持的距离
+    pedNumberLabelRomanXPadding: 100,
+
     descendantGroupLabel: {'font-size': 21, 'font-family': 'Tahoma'},
     label: {'font-size': 20, 'font-family': 'Arial'},
     nameLabels: {'font-size': 20, 'font-family': 'Arial'},
     commentLabel: {'font-size': 19, 'font-family': 'Arial' },
     externalIDLabels: {'font-size': 18, 'font-family': 'Arial' },
     disorderShapes: {},
-    partnershipNode: {fill: '#dc7868', stroke: 'black', 'stroke-width':2},  //#E25740
+    // partnershipNode: {fill: '#dc7868', stroke: 'black', 'stroke-width':2},  //#E25740
+    // 交接点
+    partnershipNode: {fill: null, stroke: null, 'stroke-width':3},  //#E25740
     partnershipRadius: 6.5,
     partnershipHandleBreakY: 15,
     partnershipHandleLength: 36,
-    partnershipLines :         {"stroke-width": 1.25, stroke : '#303058'},
-    consangrPartnershipLines : {"stroke-width": 1.25, stroke : '#402058'},
-    noContactLines:            {"stroke-width": 1.75, stroke : '#333333', "stroke-dasharray": "."},
+    partnershipLines :         {"stroke-width": 3.5, stroke : '#303058'},
+    consangrPartnershipLines : {"stroke-width": 3.5, stroke : '#402058'},
+    noContactLines:            {"stroke-width": 3.5, stroke : '#333333', "stroke-dasharray": "."},
     notInContactLineSize: 20,
     graphToCanvasScale: 12,
     layoutRelativePersonWidth: 10,

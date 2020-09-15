@@ -215,9 +215,10 @@ var PersonVisuals = Class.create(AbstractPersonVisuals, {
         if (colors.length == 0) return;
 
         var gradient = function(color, angle) {
-            var hsb = Raphael.rgb2hsb(color),
-                darker = Raphael.hsb2rgb(hsb['h'],hsb['s'],hsb['b']-.25)['hex'];
-            return angle +"-"+darker+":0-"+color+":100";
+            // var hsb = Raphael.rgb2hsb(color),
+            //     darker = Raphael.hsb2rgb(hsb['h'],hsb['s'],hsb['b']-.25)['hex'];
+            // return angle +"-"+darker+":0-"+color+":100";
+            return 'BLACK'
         };
         var disorderShapes = editor.getPaper().set();
         var delta, color;
